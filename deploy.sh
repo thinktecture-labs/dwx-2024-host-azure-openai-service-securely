@@ -17,8 +17,7 @@ fi
 
 echo "Deploying Azure Container Registry..."
 
-cd iac
-cd global
+cd iac/global
 
 terraform init -upgrade
 terraform validate
@@ -32,10 +31,9 @@ echo "Created Resource Group:           $rgName"
 echo "Created Azure Container Registry: $acrName"
 echo "Created Resource Suffix:          $suffix"
 
-cd ..
-cd ..
 echo "Azure Container Registry is deployed"
-read -p "Press return to continue"
+
+cd ../../code
 imageTag="0.0.1"
 # call build_app_image only if --skip-build flag is not set
 if [ "$1" != "--skip-build" ]; then
@@ -43,20 +41,20 @@ if [ "$1" != "--skip-build" ]; then
     az acr login --name $acrName
     imageTag=$(az acr build --no-logs -r $acrName -t app:{{.Run.ID}} . -otsv --query "runId")
     echo "Container Image build and pushed to Azure Container Registry"
-    read -p "Press return to continue"
 else
     imageTag=$(az acr repository show-tags -n $acrName --repository app --orderby time_desc -otsv --query [0])
 fi
 
-echo "Using Image Tag:               $imageTag"
+echo "Using Image Tag: $imageTag"
 echo "Deploying Application Infrastructure"
 
-cd iac
-cd workload
+cd ../iac/workload
 
 terraform init -upgrade
 terraform validate
 terraform apply -var resource_group_name=$rgName -var acr_name=$acrName -var image_tag=$imageTag -var suffix=$suffix -auto-approve
+
+cd ../..
 
 echo "Application Infrastructure Deployed"
 echo "✅ All Done!"

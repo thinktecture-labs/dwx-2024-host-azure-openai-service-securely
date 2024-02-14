@@ -4,9 +4,9 @@ namespace HostingAzureOpenAiSample.WebApp.Chat;
 
 public sealed class ChatDto
 {
-    private List<ChatMessage>? _messages;
+    private List<ChatMessageDto>? _messages;
 
-    public List<ChatMessage> Messages
+    public List<ChatMessageDto> Messages
     {
         get => _messages ??= [];
         set => _messages = value;

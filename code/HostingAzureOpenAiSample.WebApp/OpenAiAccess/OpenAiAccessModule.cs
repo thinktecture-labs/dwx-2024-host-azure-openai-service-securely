@@ -9,7 +9,8 @@ public static class OpenAiAccessModule
     {
         var options = OpenAiAccessOptions.FromConfiguration(configuration);
         var openAiClient = OpenAiClientFactory.CreateOpenAiClient(options);
-        return services.AddSingleton(options)
-                       .AddSingleton(openAiClient);
+        return services
+           .AddSingleton(options)
+           .AddSingleton(openAiClient);
     }
 }

@@ -1,6 +1,6 @@
 variable "location" {
   type    = string
-  default = "francecentral"
+  default = "swedencentral"
 }
 
 variable "suffix" {
@@ -17,4 +17,14 @@ variable "acr_name" {
 
 variable "image_tag" {
   type = string
+}
+
+variable "ai_model_name" {
+  type = string
+  default = "gpt-4o"
+}
+
+variable "ai_model_version" {
+  type    = string
+  default = "2024-05-13"
 }

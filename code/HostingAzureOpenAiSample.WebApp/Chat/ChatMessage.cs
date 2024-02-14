@@ -2,7 +2,7 @@
 
 namespace HostingAzureOpenAiSample.WebApp.Chat;
 
-public sealed class ChatMessage
+public sealed class ChatMessageDto
 {
     public Guid Id { get; set; }
     public string Originator { get; set; } = string.Empty;
